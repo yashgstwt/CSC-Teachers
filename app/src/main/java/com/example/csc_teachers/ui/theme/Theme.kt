@@ -16,14 +16,16 @@ private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF1C59AF),
     background = Color.Black,
     onBackground = Color.White,  //text color
-    tertiary = Color.Gray
+    tertiary = Color.Gray,
+    onPrimary = Color(0xFF3A3737)
 )
 
 private val LightColorScheme = lightColorScheme(
     primary =  Color(0xFF3D9BFF),
     background = Color.White,
     onBackground = Color.Black, //text color
-    tertiary = Color.Gray
+    tertiary = Color.Gray,
+    onPrimary = Color(0xFFC7E2FF)
 )
 
 @Composable

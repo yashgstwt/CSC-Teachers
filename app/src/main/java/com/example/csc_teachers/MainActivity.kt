@@ -5,20 +5,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
+import androidx.activity.viewModels
 import com.example.csc_teachers.UiLayer.HomeScreen
-import com.example.csc_teachers.UiLayer.ProgressBar
+import com.example.csc_teachers.ViewModal.HomeViewModal
+
 import com.example.csc_teachers.ui.theme.CscteachersTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,17 +17,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+val viewModal : HomeViewModal by viewModels()
             CscteachersTheme {
-                Column(Modifier.fillMaxSize()) {
-                    Spacer(Modifier.statusBarsPadding())
-                    var startAnimation by remember { mutableStateOf(false) }
-                    Button(onClick = { startAnimation = !startAnimation }) {
-                        Text("click")
-                    }
 
-                }
 
-             HomeScreen()
+            HomeScreen(viewModal)
+
+
 //            var res : publicKey? = null
 //                LaunchedEffect(true ) {
 //                    CoroutineScope(Dispatchers.IO).launch {

@@ -56,7 +56,7 @@ fun TeacherCard(activity: Activity) {
             Text(activity.activity , modifier = Modifier.clip(RoundedCornerShape(5.dp)).background(ActivityMap[activity.activity]?.copy(.4f) ?: Color.LightGray.copy(.4f)).padding(start = 5.dp , end = 5.dp) , fontWeight = FontWeight.Bold,fontSize = fontSize , color =  MaterialTheme.colorScheme.onBackground , textAlign = TextAlign.Center)
         }
         Text(activity.course , modifier = Modifier.fillMaxWidth(0.4f) , fontSize = fontSize , color =  MaterialTheme.colorScheme.onBackground, textAlign = TextAlign.Start , fontWeight = FontWeight.Bold)
-        Text(activity.duration , modifier = Modifier.fillMaxWidth(0.6f) , fontSize = fontSize , color =  MaterialTheme.colorScheme.onBackground, textAlign = TextAlign.Start , fontWeight = FontWeight.Bold)
+        Text(activity.status , modifier = Modifier.fillMaxWidth(0.6f) , fontSize = fontSize , color =  MaterialTheme.colorScheme.onBackground, textAlign = TextAlign.Start , fontWeight = FontWeight.Bold)
 
         Box(modifier = Modifier
             .fillMaxWidth(.5f)

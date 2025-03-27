@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -29,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -38,31 +40,39 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.csc_teachers.R
+import com.example.csc_teachers.ViewModal.HomeViewModal
 import com.example.csc_teachers.util.Teacherlist
 import com.example.csc_teachers.util.WeekDays
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun HomeScreen(){
+fun HomeScreen(viewModal: HomeViewModal) {
     var showDialog by remember { mutableStateOf(false) }
     var showAnimation by remember { mutableStateOf(false) }
+    var showFormDialog by remember { mutableStateOf(false) }
+
+
+    //viewModal.updateFormState(state.value.copy(date = "13 Feb 2025 - 9 Feb 2025"))
 
     Column (modifier = Modifier
         .background(MaterialTheme.colorScheme.background)
         .statusBarsPadding()
         .fillMaxSize()
+        .navigationBarsPadding()
     ){
            Row(modifier = Modifier.fillMaxWidth()
                     .background(MaterialTheme.colorScheme.primary)
-                    .fillMaxHeight(0.09f)
+                    .fillMaxHeight(0.07f)
                     .padding(start = 10.dp , end = 10.dp),
                verticalAlignment = Alignment.CenterVertically ,
                horizontalArrangement = Arrangement.SpaceAround
@@ -71,15 +81,16 @@ fun HomeScreen(){
                    Image(
                        painter = painterResource(R.drawable.profile_pic)  ,
                        contentDescription = "profile picture",
-                       modifier = Modifier.size(50.dp).clip(RoundedCornerShape(10.dp)) ,
+                       modifier = Modifier.size(45.dp).clip(RoundedCornerShape(10.dp)) ,
                        contentScale = ContentScale.Crop
                    )
                    Text(
-                       text= "Naval Ravikant " ,
+                       text= "Naval Ravikant udguywg" ,
                        fontSize = MaterialTheme.typography.titleLarge.fontSize ,
                        fontWeight = MaterialTheme.typography.titleLarge.fontWeight ,
-                       color = MaterialTheme.colorScheme.onBackground,
-                       modifier = Modifier.padding(10.dp)
+                       color = MaterialTheme.colorScheme.background,
+                       modifier = Modifier.padding(10.dp),
+                       overflow = TextOverflow.Ellipsis
                    )
                }
 
@@ -104,19 +115,19 @@ fun HomeScreen(){
                }
            }
         if(showDialog) {
-            MinimalDialog (){
+            DetailsMinimalDialog (){
                 showDialog = !showDialog
             }
-
         }
-
-
-
-
+        if (showFormDialog){
+            Form(viewModal){
+                showFormDialog = !showFormDialog
+            }
+        }
         Row(modifier = Modifier
             .padding(start = 5.dp , end = 5.dp)
             .fillMaxWidth()
-            .height(50.dp)
+            .fillMaxHeight(0.05f)
             .background(MaterialTheme.colorScheme.background),
             verticalAlignment = Alignment.Bottom,
         ) {
@@ -124,7 +135,7 @@ fun HomeScreen(){
             Text("Time" , modifier = Modifier.fillMaxWidth(0.25f) , fontSize = MaterialTheme.typography.labelSmall.fontSize , color =  MaterialTheme.colorScheme.tertiary , textAlign = TextAlign.Center , fontWeight = FontWeight.Bold)
             Text("Activity" , modifier = Modifier.fillMaxWidth(0.3f),fontSize = MaterialTheme.typography.labelSmall.fontSize , color =  MaterialTheme.colorScheme.tertiary , textAlign = TextAlign.Center , fontWeight = FontWeight.Bold)
             Text("Department" , modifier = Modifier.fillMaxWidth(0.4f) , fontSize = MaterialTheme.typography.labelSmall.fontSize , color =  MaterialTheme.colorScheme.tertiary, textAlign = TextAlign.Center , fontWeight = FontWeight.Bold)
-            Text("Duration" , modifier = Modifier.fillMaxWidth(0.6f) , fontSize = MaterialTheme.typography.labelSmall.fontSize , color =  MaterialTheme.colorScheme.tertiary , textAlign = TextAlign.Center , fontWeight = FontWeight.Bold)
+            Text("Status" , modifier = Modifier.fillMaxWidth(0.6f) , fontSize = MaterialTheme.typography.labelSmall.fontSize , color =  MaterialTheme.colorScheme.tertiary , textAlign = TextAlign.Center , fontWeight = FontWeight.Bold)
             Text("more" , modifier = Modifier.fillMaxWidth(0.9f) , fontSize = MaterialTheme.typography.labelSmall.fontSize , color =  MaterialTheme.colorScheme.tertiary , textAlign = TextAlign.Center , fontWeight = FontWeight.Bold)
         }
 
@@ -145,10 +156,17 @@ fun HomeScreen(){
                     HorizontalDivider(thickness = 1.dp, color =MaterialTheme.colorScheme.tertiary)
                 }
             }
+
+            val gradient = listOf(Color.Transparent , MaterialTheme.colorScheme.background)
+            Column (modifier = Modifier.fillMaxWidth().height(100.dp).background(Brush.verticalGradient(gradient))){
+
+            }
             FloatingActionButton(
-                onClick = {  },
+                onClick = {
+                    showFormDialog = !showFormDialog
+                      },
                 modifier = Modifier.padding(end = 10.dp , bottom = 10.dp),
-                contentColor = MaterialTheme.colorScheme.onBackground,
+                contentColor = MaterialTheme.colorScheme.background,
                 containerColor = MaterialTheme.colorScheme.primary
 
             ) {
@@ -156,12 +174,11 @@ fun HomeScreen(){
             }
         }
 
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(5.dp)
-                .height(50.dp) ,
+                .fillMaxHeight(0.5f) ,
             verticalAlignment = Alignment.CenterVertically ,
             horizontalArrangement = Arrangement.SpaceBetween
         ){
@@ -176,7 +193,8 @@ fun HomeScreen(){
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding( 10.dp) ,
+                .fillMaxHeight(1f)
+                .padding(5.dp) ,
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
             items(
@@ -190,12 +208,10 @@ fun HomeScreen(){
                     }
                     .background( if ( it.ordinal == currentClickedBtn) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary)
                 ) {
-                    Text(it.toString() , modifier = Modifier.padding(5.dp),color = MaterialTheme.colorScheme.onBackground)
+                    Text(it.toString() , modifier = Modifier.padding(5.dp),color = MaterialTheme.colorScheme.background)
                 }
             }
         }
-
-
     }
 }
 

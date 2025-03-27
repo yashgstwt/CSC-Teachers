@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -25,7 +24,7 @@ import androidx.compose.ui.window.Dialog
 import com.example.csc_teachers.util.TeacherStats
 
 @Composable
-fun MinimalDialog(onDismissRequest: () -> Unit,) {
+fun DetailsMinimalDialog(onDismissRequest: () -> Unit,) {
     var showAnimation by remember { mutableStateOf(false) }
     LaunchedEffect(true) {
         showAnimation = true

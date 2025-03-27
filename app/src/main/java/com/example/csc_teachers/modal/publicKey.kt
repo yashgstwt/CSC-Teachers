@@ -9,5 +9,5 @@ data class Activity (
     val time : String = "12pm-2pm",
     val activity : String = "Lecture",
     val course : String = "BCA",
-    val duration : String = "1h 45min"
+    val status : String = "",
 )
